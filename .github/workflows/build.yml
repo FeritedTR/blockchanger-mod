@@ -19,14 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Fix build.gradle Java version
-        run: sed -i 's/JavaLanguageVersion.of(21)/JavaLanguageVersion.of(17)/' build.gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Fix Java version in build.gradle
+        run: sed -i 's/JavaLanguageVersion.of(21)/JavaLanguageVersion.of(17)/' build.gradle || true
 
       - name: Build
-        run: ./gradlew build
+        run: gradle build
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
